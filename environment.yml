@@ -1,16 +1,19 @@
-name: gaussian_surfels
+name: surfel
 channels:
   - pytorch
+  - nvidia/label/cuda-11.8.0
   - conda-forge
   - defaults
 dependencies:
-  - cudatoolkit=11.6
+  - cuda-toolkit=11.8
+  - numpy=1.23.5
   - plyfile
-  - python=3.7.13
+  - python=3.9
   - pip=22.3.1
-  - pytorch=1.12.1
-  - torchaudio=0.12.1
-  - torchvision=0.13.1
+  - pytorch=2.0.1
+  - pytorch-cuda=11.8
+  - torchaudio=2.0.2
+  - torchvision=0.15.2
   - tqdm
   - pip:
     - pymeshlab
@@ -21,6 +24,9 @@ dependencies:
     - numba
     - open3d
     - trimesh
-    - "git+https://github.com/facebookresearch/pytorch3d.git"
     - submodules/diff-gaussian-rasterization
     - submodules/simple-knn
+
+# - Download cub 11.7.1 from https://github.com/NVIDIA/cub/archive/refs/tags/1.17.1.zip
+# - Copy all contents in cub-1.17.1/cub and replace the contents in  <envs>/surfel/include/cub
+# - pip install "git+https://github.com/facebookresearch/pytorch3d.git@v0.7.7"
