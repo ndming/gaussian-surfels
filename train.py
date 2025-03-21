@@ -26,6 +26,7 @@ from argparse import ArgumentParser, Namespace
 import time
 import os
 from arguments import ModelParams, PipelineParams, OptimizationParams
+from pathlib import Path
 try:
     from torch.utils.tensorboard import SummaryWriter
     TENSORBOARD_FOUND = True
@@ -189,7 +190,9 @@ def training(dataset, opt, pipe, testing_iterations, saving_iterations, checkpoi
                 normal_wrt = normal2rgb(normal, mask_vis)
                 depth_wrt = depth2rgb(depth, mask_vis)
                 img_wrt = torch.cat([gt_image, image, normal_wrt * opac, depth_wrt * opac], 2)
-                save_image(img_wrt.cpu(), f'test/test.png')
+                img_test_dir = Path(scene.model_path) / "monitor"
+                os.makedirs(img_test_dir, exist_ok=True)
+                save_image(img_wrt.cpu(), img_test_dir / f"iter_{iteration:05d}.png")
                 
 
             

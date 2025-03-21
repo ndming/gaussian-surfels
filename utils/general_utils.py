@@ -234,6 +234,7 @@ def poisson_mesh(path, vtx, normal, color, depth, thrsh):
     nn_dist, nn_idx, _ = knn_points(torch.from_numpy(vert).to(torch.float32).cuda()[None], vtx.cuda()[None], K=4)
     nn_dist = nn_dist[0]
     nn_idx = nn_idx[0]
+    nn_idx = nn_idx.to('cpu')
     nn_color = torch.mean(color[nn_idx], axis=1)
 
     # create mesh with color and quality (distance to the closest sampled points)

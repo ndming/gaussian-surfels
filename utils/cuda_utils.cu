@@ -524,7 +524,7 @@ __global__ void reprojection_flow_determine_kernel(
             int flow_buf[2], scrn_idx = (reso[0] - scrnPos_temp[1] - 1) * reso[1] + scrnPos_temp[0];
             float global_depth = min_depth[scrn_idx], thread_depth = camPos[2];
 
-            while (global_depth == 0 or global_depth > thread_depth) {
+            while (global_depth == 0 || global_depth > thread_depth) {
             //     printf("%.5f, %.5f\n", global_depth, thread_depth);
                 global_depth = atomicCAS_f32(&min_depth[scrn_idx], global_depth, thread_depth);
             }

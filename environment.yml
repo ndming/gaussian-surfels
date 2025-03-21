@@ -1,20 +1,24 @@
+# This branch is working for Windows only, before creating the environment, 
+# install Visual Studio 2022 BuildTools version 17.9.7 with C++ Desktop Development component
+
 name: surfel
 channels:
   - pytorch
-  - nvidia/label/cuda-11.8.0
+  - nvidia/label/cuda-11.7.1
   - conda-forge
   - defaults
 dependencies:
-  - cuda-toolkit=11.8
+  - cuda-toolkit=11.7
   - numpy=1.23.5
   - plyfile
   - python=3.9
   - pip=22.3.1
-  - pytorch=2.0.1
-  - pytorch-cuda=11.8
-  - pytorch-lightning=2.3.3
-  - torchaudio=2.0.2
-  - torchvision=0.15.2
+  - pytorch=1.13.1
+  - pytorch-cuda=11.7
+  - pytorch-lightning
+  - setuptools=72.1.0
+  - torchaudio=0.13.1
+  - torchvision=0.14.1
   - tqdm
   - pip:
     - pymeshlab
@@ -28,12 +32,24 @@ dependencies:
     - timm
     - h5py
     - python-certifi-win32
+    - scikit-learn
+    - tensorboard
     - submodules/diff-gaussian-rasterization
     - submodules/simple-knn
 
 # Download cub 11.7.1 from https://github.com/NVIDIA/cub/archive/refs/tags/1.17.1.zip
 # Copy all contents in cub-1.17.1/cub and replace the contents in  <envs>/surfel/include/cub
-# pip install "git+https://github.com/facebookresearch/pytorch3d.git@v0.7.7"
+# > pip install "git+https://github.com/facebookresearch/pytorch3d.git@v0.7.6"
 
 # https://drive.google.com/uc?id=1wNxVO4vVbDEMEpnAi_jwQObf2MFodcBR - download the checkpoint for normal estimation model
 # Put the .ckpt file in the submodules/omnidata/pretrained_models directory
+
+# Add cl directory to the PATH environment variable:
+# - Open Developer Command Prompt for VS 2022
+# - Run: where cl
+# - Grab its parent dir and add to PATH
+
+# Open <envs>/surfel/include/thrust/system/cuda/config.h:
+# - Find the line: #ifndef THRUST_IGNORE_CUB_VERSION_CHECK
+# - Add this line right before it: #define THRUST_IGNORE_CUB_VERSION_CHECK true
+# - Commment out the line: #else // THRUST_IGNORE_CUB_VERSION_CHECK

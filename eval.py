@@ -20,6 +20,8 @@ from pytorch3d.structures import Pointclouds, Meshes
 from pytorch3d.io import IO
 from argparse import ArgumentParser
 import sys
+from pathlib import Path
+import json
 
 def sample_single_tri(input_):
     n1, n2, v1, v2, tri_vert = input_
@@ -244,7 +246,29 @@ def eval_dtu(source_path, scanId, dtu_gt_path, in_mesh):
     T = scale_mat[:3, 3:].T
     print(f'Evaluating: {in_mesh}')
     cd = eval(in_mesh, scanId, dtu_gt_path, S, T)
-    print('CD:', cd)
+    
+    # Extract method and depth from in_mesh name
+    in_mesh_path = Path(in_mesh)
+    method, depth = in_mesh_path.stem.split('_')[-1], in_mesh_path.stem.split('_')[-2]
+
+    # Prepare chamfer.json path
+    chamfer_file = in_mesh_path.parent / "chamfer.json"
+
+    # Load existing data if chamfer.json exists
+    if chamfer_file.exists():
+        with chamfer_file.open('r') as f:
+            chamfer_data = json.load(f)
+    else:
+        chamfer_data = {}
+
+    # Write cd to the appropriate key
+    chamfer_data[f"{method}_{depth}"] = cd
+
+    # Save updated data back to chamfer.json
+    with chamfer_file.open('w') as f:
+        json.dump(chamfer_data, f, indent=4)
+
+    print(f'Average CD: {cd:.2f}')
     return cd
 
 def eval_bmvs(source_path, in_mesh):

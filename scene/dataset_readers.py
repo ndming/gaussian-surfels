@@ -410,7 +410,7 @@ def readIDRCameras(path):
         # exit()
         
         image_path = image_paths[i]
-        image_name = image_path.split('.')[0].split('/')[-1]
+        image_name = image_path.split('.')[0].split('/')[-1].split('\\')[-1]
         uid = int(image_name.split('/')[-1])
         image = (rgb_images[i].transpose([1, 2, 0]) * 0.5 + 0.5) * 255
 
