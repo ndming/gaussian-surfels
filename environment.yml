@@ -12,6 +12,7 @@ dependencies:
   - pip=22.3.1
   - pytorch=2.0.1
   - pytorch-cuda=11.8
+  - pytorch-lightning
   - torchaudio=2.0.2
   - torchvision=0.15.2
   - tqdm
@@ -24,9 +25,15 @@ dependencies:
     - numba
     - open3d
     - trimesh
+    - timm
+    - h5py
+    - python-certifi-win32
     - submodules/diff-gaussian-rasterization
     - submodules/simple-knn
 
-# - Download cub 11.7.1 from https://github.com/NVIDIA/cub/archive/refs/tags/1.17.1.zip
-# - Copy all contents in cub-1.17.1/cub and replace the contents in  <envs>/surfel/include/cub
-# - pip install "git+https://github.com/facebookresearch/pytorch3d.git@v0.7.7"
+# Download cub 11.7.1 from https://github.com/NVIDIA/cub/archive/refs/tags/1.17.1.zip
+# Copy all contents in cub-1.17.1/cub and replace the contents in  <envs>/surfel/include/cub
+# pip install "git+https://github.com/facebookresearch/pytorch3d.git@v0.7.7"
+
+# https://drive.google.com/uc?id=1wNxVO4vVbDEMEpnAi_jwQObf2MFodcBR - download the checkpoint for normal estimation model
+# Put the .ckpt file in the submodules/omnidata/pretrained_models directory
