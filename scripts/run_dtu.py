@@ -27,4 +27,8 @@ for scene in scenes:
     print("[>] " + cmd)
     os.system(cmd)
 
+    cmd = f"python metrics.py -m \"{out_dir}/scan{scene}\""
+    print("[>] " + cmd)
+    os.system(cmd)
+
     print(f"======= Done with scene scan{scene} =======\n")
